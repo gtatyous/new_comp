@@ -1,0 +1,12 @@
+declare val Inc( val y);
+val x = 5;
+if( x < 10){
+  print(x);
+}else{
+  x = 10;
+}
+
+print(Inc(x));
+define val Inc( val x){
+  return x + 1;
+}

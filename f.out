@@ -1,0 +1,91 @@
+#=-=-= Ouput from Dr. Charles Ofria's sample compiler.
+  val_copy 10000 regH                      # Setup regH to point to start of stack.
+  store 20000 0                            # Store next free memory at 0
+### Converting: val_copy 5 s5
+  val_copy 5 regB 
+  store regB 5
+### Converting: val_copy s5 s3
+  load 5 regA
+  val_copy regA regB 
+  store regB 3
+### Converting: val_copy 10 s6
+  val_copy 10 regB 
+  store regB 6
+### Converting: test_less s3 s6 s7
+  load 3 regA
+  load 6 regB
+  test_less regA regB regC 
+  store regC 7
+### Converting: jump_if_0 s7 if_else_0
+  load 7 regA
+  jump_if_0 regA if_else_0 
+### Converting: out_val s3
+  load 3 regA
+  out_val regA 
+### Converting: out_char '\n'
+  out_char '\n'                         # End print statements with a newline.
+### Converting: jump if_end_1
+  jump if_end_1 
+if_else_0:
+### Converting: val_copy 10 s8
+  val_copy 10 regB 
+  store regB 8
+### Converting: val_copy s8 s3
+  load 8 regA
+  val_copy regA regB 
+  store regB 3
+if_end_1:
+### Converting: val_copy s3 s2
+  load 3 regA
+  val_copy regA regB 
+  store regB 2
+### Converting: push function_return_2
+  store function_return_2 regH                       # Save loaded value onto the stack.
+  add regH 1 regH                       # Increment stack to next mem position
+                                        # Save return position on the execution stack.
+### Converting: jump function_Inc
+  jump function_Inc                     # Call the function.
+function_return_2:
+### Converting: val_copy s1 s9
+  load 1 regA
+  val_copy regA regB                    # Copy over return value.
+  store regB 9
+### Converting: out_val s9
+  load 9 regA
+  out_val regA 
+### Converting: out_char '\n'
+  out_char '\n'                         # End print statements with a newline.
+### Converting: nop
+  nop 
+### Converting: nop
+  nop 
+### Converting: nop
+  nop                                   # ============ FUNCTIONS ============
+### Converting: jump define_functions_end
+  jump define_functions_end             # Skip over function defs during normal execution
+### Converting: nop
+  nop 
+### Converting: nop
+  nop                                   # FUNCTION: Inc
+function_Inc:
+### Converting: val_copy 1 s10
+  val_copy 1 regB 
+  store regB 10
+### Converting: add s2 s10 s11
+  load 2 regA
+  load 10 regB
+  add regA regB regC 
+  store regC 11
+### Converting: val_copy s11 s1
+  load 11 regA
+  val_copy regA regB 
+  store regB 1
+### Converting: pop s12
+  sub regH 1 regH                       # Decrement stack to prev mem position
+  load regH regA                        # Load stored value from the stack.
+
+  store regA 12
+### Converting: jump s12
+  load 12 regA
+  jump regA 
+define_functions_end:

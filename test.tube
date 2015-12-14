@@ -1,0 +1,11 @@
+val x = 20;
+print(x);
+
+declare val TestFun(val a);
+
+print(TestFun(12));
+
+define val TestFun(val a) {
+   if (a < 1) return 1;
+   return TestFun(a-1) * 2;
+}

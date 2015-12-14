@@ -1,0 +1,155 @@
+#=-=-= Ouput from Dr. Charles Ofria's sample compiler.
+  val_copy 18 regH                      # Setup regH to point to start of stack.
+  store 10018 0                         # Store next free memory at 0
+### Converting: val_copy 20 s5 
+  val_copy 20 regB  
+  store regB 5
+### Converting: val_copy s5 s1 
+  load 5 regA
+  val_copy regA regB  
+  store regB 1
+### Converting: out_val s1  
+  load 1 regA
+  out_val regA   
+### Converting: out_char '\n'  
+  out_char '\n'                         # End print statements with a newline.
+### Converting: val_copy 12 s6 
+  val_copy 12 regB  
+  store regB 6
+### Converting: push s6  
+  load 6 regA
+  store regA regH                       # Save loaded value onto the stack.
+  add regH 1 regH                       # Increment stack to next mem position
+
+### Converting: val_copy s6 s3 
+  load 6 regA
+  val_copy regA regB  
+  store regB 3
+### Converting: push function_return_0  
+  store function_return_0 regH                       # Save loaded value onto the stack.
+  add regH 1 regH                       # Increment stack to next mem position
+                                        # Save return position on the execution stack.
+### Converting: jump function_TestFun  
+  jump function_TestFun                 # Call the function.
+function_return_0:
+### Converting: val_copy s2 s7 
+  load 2 regA
+  val_copy regA regB                    # Copy over return value.
+  store regB 7
+### Converting: pop s6  
+  sub regH 1 regH                       # Decrement stack to prev mem position
+  load regH regA                        # Load stored value from the stack.
+
+  store regA 6
+### Converting: out_val s7  
+  load 7 regA
+  out_val regA   
+### Converting: out_char '\n'  
+  out_char '\n'                         # End print statements with a newline.
+### Converting: nop   
+  nop    
+### Converting: nop   
+  nop    
+### Converting: nop   
+  nop                                   # ============ FUNCTIONS ============
+### Converting: jump define_functions_end  
+  jump define_functions_end             # Skip over function defs during normal execution
+### Converting: nop   
+  nop    
+### Converting: nop   
+  nop                                   # FUNCTION: TestFun
+function_TestFun:
+### Converting: val_copy 1 s8 
+  val_copy 1 regB  
+  store regB 8
+### Converting: test_less s3 s8 s9
+  load 3 regA
+  load 8 regB
+  test_less regA regB regC 
+  store regC 9
+### Converting: jump_if_0 s9 if_else_1 
+  load 9 regA
+  jump_if_0 regA if_else_1  
+### Converting: val_copy 1 s10 
+  val_copy 1 regB  
+  store regB 10
+### Converting: val_copy s10 s2 
+  load 10 regA
+  val_copy regA regB  
+  store regB 2
+### Converting: pop s11  
+  sub regH 1 regH                       # Decrement stack to prev mem position
+  load regH regA                        # Load stored value from the stack.
+
+  store regA 11
+### Converting: jump s11  
+  load 11 regA
+  jump regA   
+### Converting: jump if_end_2  
+  jump if_end_2   
+if_else_1:
+if_end_2:
+### Converting: val_copy 1 s12 
+  val_copy 1 regB  
+  store regB 12
+### Converting: sub s3 s12 s13
+  load 3 regA
+  load 12 regB
+  sub regA regB regC 
+  store regC 13
+### Converting: push s3  
+  load 3 regA
+  store regA regH                       # Save loaded value onto the stack.
+  add regH 1 regH                       # Increment stack to next mem position
+
+### Converting: push s13  
+  load 13 regA
+  store regA regH                       # Save loaded value onto the stack.
+  add regH 1 regH                       # Increment stack to next mem position
+
+### Converting: val_copy s13 s3 
+  load 13 regA
+  val_copy regA regB  
+  store regB 3
+### Converting: push function_return_3  
+  store function_return_3 regH                       # Save loaded value onto the stack.
+  add regH 1 regH                       # Increment stack to next mem position
+                                        # Save return position on the execution stack.
+### Converting: jump function_TestFun  
+  jump function_TestFun                 # Call the function.
+function_return_3:
+### Converting: val_copy s2 s14 
+  load 2 regA
+  val_copy regA regB                    # Copy over return value.
+  store regB 14
+### Converting: pop s13  
+  sub regH 1 regH                       # Decrement stack to prev mem position
+  load regH regA                        # Load stored value from the stack.
+
+  store regA 13
+### Converting: pop s3  
+  sub regH 1 regH                       # Decrement stack to prev mem position
+  load regH regA                        # Load stored value from the stack.
+
+  store regA 3
+### Converting: val_copy 2 s15 
+  val_copy 2 regB  
+  store regB 15
+### Converting: mult s14 s15 s16
+  load 14 regA
+  load 15 regB
+  mult regA regB regC 
+  store regC 16
+### Converting: val_copy s16 s2 
+  load 16 regA
+  val_copy regA regB  
+  store regB 2
+### Converting: pop s17  
+  sub regH 1 regH                       # Decrement stack to prev mem position
+  load regH regA                        # Load stored value from the stack.
+
+  store regA 17
+### Converting: jump s17  
+  load 17 regA
+  jump regA   
+define_functions_end:
